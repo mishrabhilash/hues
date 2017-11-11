@@ -4,4 +4,7 @@ This app shows beautiful screen saver which are fetched from reddit's famous thr
 * architecture
 * mostbeautiful
 
+![alt text](https://github.com/mishrabhilash/redditream/blob/master/Screenshot_1510438561_framed.png)
+![alt text](https://github.com/mishrabhilash/redditream/blob/master/Screenshot_1510438576_framed.png)
 
+Prefer to use it on android tv
