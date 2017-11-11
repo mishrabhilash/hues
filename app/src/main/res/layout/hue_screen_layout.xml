@@ -15,7 +15,7 @@
     <TextClock
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_8dp"
+        android:layout_marginBottom="@dimen/dimen_4dp"
         android:layout_marginStart="@dimen/dimen_16dp"
         android:alpha="0.80"
         android:format12Hour="h:mm"
@@ -34,6 +34,7 @@
         android:layout_marginBottom="@dimen/dimen_16dp"
         android:layout_marginStart="@dimen/dimen_16dp"
         android:alpha="0.80"
+        android:textSize="8sp"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

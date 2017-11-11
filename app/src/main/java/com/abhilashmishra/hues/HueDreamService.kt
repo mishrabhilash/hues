@@ -3,6 +3,7 @@ package com.abhilashmishra.hues
 import android.service.dreams.DreamService
 import android.util.Log
 import android.widget.ImageView
+import android.widget.TextView
 import com.abhilashmishra.hues.model.ListingResponse
 import com.abhilashmishra.hues.model.PostData
 import com.abhilashmishra.hues.model.Subreddit
@@ -31,7 +32,9 @@ class HueDreamService : DreamService() {
     var after: String? = null
     val subscriptions: CompositeDisposable = CompositeDisposable()
 
+    //Views
     lateinit var imageView: ImageView
+    lateinit var authorName: TextView
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -43,7 +46,8 @@ class HueDreamService : DreamService() {
 
         // show the view on the screen
         setContentView(R.layout.hue_screen_layout)
-        imageView = findViewById<ImageView>(R.id.image_view)
+        imageView = findViewById(R.id.image_view)
+        authorName = findViewById(R.id.description)
         init()
     }
 
@@ -116,6 +120,8 @@ class HueDreamService : DreamService() {
                                 .load(imageList[lastShownImageIndex].url)
                                 .transition(DrawableTransitionOptions.withCrossFade())
                                 .into(imageView)
+
+                        authorName.text = "author: ${imageList[lastShownImageIndex].author}"
 
                     }
 
