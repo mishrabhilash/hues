@@ -4,9 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
+    <View
+        android:id="@+id/totalBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <ImageView
-        android:scaleType="centerCrop"
-
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,8 +36,8 @@
         android:layout_marginBottom="@dimen/dimen_16dp"
         android:layout_marginStart="@dimen/dimen_16dp"
         android:alpha="0.80"
-        android:textSize="8sp"
         android:textColor="@android:color/white"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="lorem ipsum dolor sit"/>
