@@ -91,7 +91,8 @@ class HueDreamService : DreamService() {
                             if (it.postData.postHint == "image") {
                                 imageList.add(it.postData)
                             }
-                            if (subscriptions.size() == 0) {
+
+                            if (subscriptions.size() == 0 && imageList.size > 0) {
                                 startImageView()
                             }
                         }
@@ -127,7 +128,8 @@ class HueDreamService : DreamService() {
     }
 
     private fun startImageView() {
-        subscriptions.add(Flowable.interval(20000, TimeUnit.MILLISECONDS)
+        loadImage()
+        subscriptions.add(Flowable.interval(15000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSubscriber<Long>() {
@@ -136,32 +138,7 @@ class HueDreamService : DreamService() {
                     }
 
                     override fun onNext(t: Long?) {
-                        lastShownImageIndex++
-                        if (lastShownImageIndex == imageList.size - 1) {
-                            subscriptions.clear()
-                            lastShownImageIndex = 0
-                            fetchImages()
-                        }
-
-                        Glide.with(applicationContext)
-                                .load(imageList[lastShownImageIndex].url)
-                                .transition(DrawableTransitionOptions.withCrossFade(800))
-                                .listener(object : RequestListener<Drawable> {
-                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                        return false
-                                    }
-
-                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                        if (resource is BitmapDrawable) {
-                                            Palette.from(resource.bitmap).generate(paletteListener)
-                                        }
-                                        return false
-                                    }
-
-                                })
-                                .into(imageView)
-
-                        authorName.text = "author: ${imageList[lastShownImageIndex].author}"
+                        loadImage()
 
                     }
 
@@ -170,5 +147,34 @@ class HueDreamService : DreamService() {
                     }
 
                 }))
+    }
+
+    private fun loadImage() {
+        lastShownImageIndex++
+        if (lastShownImageIndex == imageList.size - 1) {
+            subscriptions.clear()
+            lastShownImageIndex = 0
+            fetchImages()
+        }
+
+        Glide.with(applicationContext)
+                .load(imageList[lastShownImageIndex].url)
+                .transition(DrawableTransitionOptions.withCrossFade(800))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        if (resource is BitmapDrawable) {
+                            Palette.from(resource.bitmap).generate(paletteListener)
+                        }
+                        return false
+                    }
+
+                })
+                .into(imageView)
+
+        authorName.text = "author: ${imageList[lastShownImageIndex].author}"
     }
 }
